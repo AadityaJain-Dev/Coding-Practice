@@ -98,11 +98,11 @@ class App extends Component {
             <Route exact path="/cart"  > <Cart items={this.cartItems} /></Route>
             <Route exact path="/checkout"  > <Checkout /></Route>
             <Route exact path="/add-product" component={AddProduct} />
-            <Route exact path="/search" component={Search} />
+            <Route exact path="/search" component={Search} LoginData={this.is_Login} />
             <Route exact path="/order-placed" component={orderPlaced} />
             <Route exact path="/my-orders" component={placedOrder} />
             <Route exact path="/"> <Home addCart={this.addToCart} /> </Route>
-            <Route exact path="/*" component={NotFound} />
+            <Route exact path="/**" component={NotFound} />
           </Switch>
 
         </BrowserRouter>

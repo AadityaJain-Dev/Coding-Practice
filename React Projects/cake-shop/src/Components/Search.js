@@ -2,6 +2,7 @@ import axios from "axios"
 // import queryparser from 'query-string'
 import SearchCard from "./searchCard"
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 export const Search = (props) => {
 
 
@@ -9,7 +10,7 @@ export const Search = (props) => {
     // console.log(props.location);
 
     const urlParameter = new URLSearchParams(window.location.search);
-    const searchString = urlParameter.get('q');
+    const searchString = urlParameter.get('q').replace(/[^a-zA-Z ]/g, "");
 
     console.log("search query", searchString);
 
@@ -28,7 +29,8 @@ export const Search = (props) => {
                 setSearchResult(resolved.data.data)
             },
             (error) => {
-                alert(error)
+                toast.error(error)
+                console.log(error);
             }
 
         )

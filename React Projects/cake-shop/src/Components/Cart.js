@@ -1,7 +1,6 @@
 import { CartItem } from './cart-item'
-import { Redirect, withRouter } from "react-router"
+import { withRouter } from "react-router"
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -67,7 +66,7 @@ const Cart = (props) => {
 
             toast.success("item removed from cart")
 
-            if (item_deleted == "a") {
+            if (item_deleted === "a") {
                 setItemDeleted("")
             } else {
                 setItemDeleted("a")
@@ -119,21 +118,23 @@ const Cart = (props) => {
             }
 
 
-            <div class="row">
-                <div className="col-6 text-start mt-5">
-                    <div class="row">
-                        <span className="col-6">Total: {total}rs </span>
-                        <span className="col-6">Item in cart: {cart_data.length}</span>
+            {
+                cart_data.length > 0 && <div class="row">
+                    <div className="col-6 text-start mt-5">
+                        <div class="row">
+                            <span className="col-6">Total: {total}rs </span>
+                            <span className="col-6">Item in cart: {cart_data.length}</span>
+                        </div>
+                    </div>
+
+
+                    <div className="col-6 text-end mt-5">
+                        {cart_data.length <= 0 && <button name="" id="" className="btn btn-primary" role="button" disabled>  Check Out</button>}
+                        {cart_data.length > 0 && <button name="" id="" className="btn btn-primary" role="button" onClick={checkout}> Check Out</button>}
+
                     </div>
                 </div>
-
-
-                <div className="col-6 text-end mt-5">
-                    {cart_data.length <= 0 && <button name="" id="" className="btn btn-primary" role="button" disabled>  Check Out</button>}
-                    {cart_data.length > 0 && <button name="" id="" className="btn btn-primary" role="button" onClick={checkout}> Check Out</button>}
-
-                </div>
-            </div>
+            }
 
         </div>
 

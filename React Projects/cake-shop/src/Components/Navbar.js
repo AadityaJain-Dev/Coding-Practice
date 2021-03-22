@@ -44,11 +44,11 @@ class Navbar extends Component {
                                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                                     </Link>
                                 </li>
-                                <li class="nav-item">
-                                    <Link to="/#cake-products">
+                                {/* <li class="nav-item">
+                                    <Link to="/#cakeproducts">
                                         <a class="nav-link" href="#">Products</a>
                                     </Link>
-                                </li>
+                                </li> */}
 
                                 {
                                     (
@@ -107,11 +107,39 @@ class Navbar extends Component {
 
 
                                 }
-                                <li class="nav-item">
-                                    <Link to="/Cart">
-                                        <a class="nav-link" href="#">Cart</a>
-                                    </Link>
-                                </li>
+                                {
+                                    (
+                                        (this.props.LoginData) || (localStorage.getItem("token"))
+                                    ) && (
+                                        <li class="nav-item">
+                                            <Link to="/Cart">
+                                                <a class="nav-link" href="#">Cart</a>
+                                            </Link>
+                                        </li>
+
+                                    )
+
+
+
+                                }
+
+                                {
+                                    (
+                                        (this.props.LoginData) || (localStorage.getItem("token"))
+                                    ) && (
+                                        <li class="nav-item">
+                                            <Link to="/my-orders">
+                                                <a class="nav-link" href="#">My Orders</a>
+                                            </Link>
+                                        </li>
+
+
+                                    )
+
+
+
+                                }
+
 
                             </ul>
                             <form class="d-flex">

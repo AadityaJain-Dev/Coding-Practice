@@ -1,5 +1,5 @@
 import { withRouter } from "react-router"
-import { useState, useEffect, Component } from "react";
+import { Component } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -227,14 +227,14 @@ class Checkout extends Component {
 
 
 
-                    <div class="col-12">
+                    {/* <div class="col-12">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" />
                             <label class="form-check-label" for="invalidCheck2">
                                 Agree to terms and conditions
       </label>
                         </div>
-                    </div>
+                    </div> */}
                     <div class="col-12">
                         <button class="btn btn-primary" type="submit">Submit form</button>
                     </div>

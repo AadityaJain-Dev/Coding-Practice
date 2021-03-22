@@ -2,13 +2,17 @@ import axios from "axios";
 import { Redirect, withRouter } from "react-router"
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
 
 const CakeDetails = (props) => {
 
 
 
-    // let urlData = useParams();
-    // let cakeId = urlData.cakeid
+    let urlData = useParams();
+    let cakeId = urlData.cakeid
+
+    console.log(cakeId);
 
 
 
@@ -20,33 +24,62 @@ const CakeDetails = (props) => {
 
 
 
+    const [cakedata, setcakedata] = useState({ owner: {} })
+    useEffect(() => {
+        axios({
+            url: "https://apibyashu.herokuapp.com/api/cake/" + cakeId,
+            method: "GET",
+        }).then(
+
+            (resolved) => {
+                setcakedata(resolved.data.data)
+            },
+            (error) => { }
+
+        )
+    }, [])
+
+    let data = {
+        cake_Id: cakedata.cakeid,
+        cake_Name: cakedata.name,
+        cake_Price: cakedata.price,
+        cake_Image: cakedata.image,
+        cake_Weight: cakedata.weight
+    }
 
 
-    // const [cakedata, setcakedata] = useState({ owner: {} })
-    // useEffect(() => {
-    //     axios({
-    //         url: "http://apibyashu.herokuapp.com/api/cake/" + cakeId,
-    //         method: "GET",
-    //     }).then(
+    let addToCart = () => {
 
-    //         (resolved) => {
-    //             setcakedata(resolved.data.data)
-    //         },
-    //         (error) => { }
+        if (!localStorage.getItem("token")) {
 
-    //     )
-    // }, [])
+            toast.error("Please log in first before you add to cart")
+            props.history.push("/login")
+            return
+        } else {
+            props.addCart(data)
+
+        }
 
 
+    }
+
+
+    let image_url = () => {
+        if (cakedata.image === "C:\\fakepath\\image3.jfif") {
+            return "https://res.cloudinary.com/ashudev/image/upload/v1615381479/xeowxf1xf8unbnqlipap.jpg"
+
+        } else {
+            return cakedata.image
+
+        }
+    }
 
     return (
         <div className="container">
 
-
-            {/* 
-            <div className="row mt-5 mb-5">
+            <div className="row mt-5 mb-5 pb-5">
                 <div className="col-3">
-                    <img src={cakedata.image} alt={cakedata.name} style={{ width: '100%' }} />
+                    <img src={image_url()} alt={cakedata.name} style={{ width: '100%' }} />
                 </div>
                 <div className="col-7">
                     <div className="row">
@@ -81,8 +114,9 @@ const CakeDetails = (props) => {
 
                 </div>
                 <div className="col-2">
-                    <button className="btn btn-success" onclick={() => addToCart}>Add to cart</button>   </div>
-            </div> */}
+                    <button className="btn btn-success" onClick={addToCart}>Add to cart</button>   </div>
+            </div>
+
         </div>
     )
 

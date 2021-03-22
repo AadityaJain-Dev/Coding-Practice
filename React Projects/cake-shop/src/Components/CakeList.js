@@ -19,7 +19,7 @@ export const CakeList = (props) => {
                 // dataFetched = true
                 cakesList = resolved.data.data;
                 setCakes(cakesList)
-                toast.success("Reviced product data (using hooks)")
+                toast.success("Received product data (using hooks)")
             },
             (error) => {
                 toast.error("Unable to contact API, please try again later.")
@@ -27,11 +27,11 @@ export const CakeList = (props) => {
         )
     }
 
-    console.log("test");
-    return (
-        <div className="container mt-5 text-center mb-5" id="cake-products">
 
-            <h3>Our Products</h3>
+    return (
+        <div className="container mt-5 text-center mb-5" >
+
+            <h3 id="cakeproducts">Our Products</h3>
             <div className="row">
                 {
                     cakesList.length === 0 && <h1> Waiting for data</h1>

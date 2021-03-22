@@ -16,13 +16,13 @@ let authCheck = (e) => {
 class AddProduct extends Component {
 
     errors = {
-        ingredients: "Please enter the ingredients of product",
-        description: "Please enter the description of product",
-        type: "Please select the type.",
-        weight: "Please enter the weight",
-        flavour: "Please select a flavour.",
-        name: "Please enter product name.",
-        price: "Please set price"
+        ingredients: " ",
+        description: " ",
+        type: " ",
+        weight: " ",
+        flavour: " ",
+        name: " ",
+        price: " "
     }
 
     product = {}

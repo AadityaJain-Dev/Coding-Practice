@@ -1,4 +1,5 @@
-import { Redirect, withRouter } from "react-router"
+import { withRouter } from "react-router"
+import { toast } from "react-toastify"
 
 const Cake = (props) => {
 
@@ -16,7 +17,7 @@ const Cake = (props) => {
         cake_Name: props.data.name,
         cake_Price: props.data.price,
         cake_Image: temp_img,
-        cake_Weight: 2
+        cake_Weight: props.data.weight
     }
 
 
@@ -28,8 +29,9 @@ const Cake = (props) => {
 
     let addToCart = () => {
         if (!localStorage.getItem("token")) {
-            alert("Please log in first before you add to cart");
-            <Redirect to="/login" />
+            // alert("Please log in first before you add to cart");
+            toast.error("Please log in first before you add to cart")
+            props.history.push("/login")
             return
         } else {
             props.addCart(data)

@@ -24,11 +24,11 @@ class Register extends Component {
 
 
     errors = {
-        fname: "Enter your first name",
-        lname: "Enter your last name",
-        email: "Enter your email",
-        mobile: "Enter your mobile number",
-        password: "Enter your password",
+        fname: " ",
+        lname: " ",
+        email: " ",
+        mobile: " ",
+        password: " ",
     }
 
 
