@@ -20,7 +20,7 @@ router.post("/", function (req, res, next) {
   } else {
     const username = req.body.username;
     const password = req.body.password;
-
+    // TODO: replace find with fineOne function
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       const dbo = db.db("project");
@@ -28,7 +28,7 @@ router.post("/", function (req, res, next) {
         .collection("users")
         .find(
           { email: username, password: password },
-          { projection: { email: 1 } }
+          { projection: { password: 0 } }
         )
         .toArray(function (err, result) {
           if (err) throw err;
@@ -41,7 +41,11 @@ router.post("/", function (req, res, next) {
             res.end(JSON.stringify(data));
           } else {
             res.status(200);
-            res.end("Login Success");
+            res.end(
+              '{"status":"Login Success","data": ' +
+                JSON.stringify(result[0]) +
+                "}"
+            );
           }
 
           db.close();

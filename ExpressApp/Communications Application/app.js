@@ -50,15 +50,17 @@ app.use("/dashboard", dashboardRouter);
 app.use("/register-success", registerSuccessRouter);
 app.use("/manage-user", manageUserRouter);
 app.use("/manage-docs", manageDocsRouter);
-app.use("/logout", indexRouter);
+app.use("/logout", logoutRouter);
 app.use("/edit-user", editUserRouter);
-app.use("/chat", indexRouter);
+app.use("/chat", chatRouter);
 
 // API paths
 app.use("/api/userLogin", usersLoginRouter);
 app.use("/api/userRegister", usersRegisterRouter);
 app.use("/api/allusers", allUsersRouter);
 app.use("/api/user", specificUserRouter);
+app.use("/api/sendChat", sendChatRouter);
+app.use("/api/getChat", groupChatRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

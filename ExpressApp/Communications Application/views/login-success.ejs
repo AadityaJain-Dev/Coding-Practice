@@ -19,28 +19,28 @@
       <div class="row">
         <a
           class="btn my-btn-secondary col-3 border border-dark border-1 rounded-0"
-          href="#"
+          href="/chat"
           role="button"
         >
           Group Chat</a
         >
         <a
           class="btn my-btn-secondary col-3 border border-dark border-1 rounded-0"
-          href="#"
+          href="/manage-user"
           role="button"
         >
           Manage Users
         </a>
         <a
           class="btn my-btn-secondary col-3 border border-dark border-1 rounded-0"
-          href="#"
+          href="/manage-docs"
           role="button"
         >
           Manage Documents
         </a>
         <a
           class="btn my-btn-secondary col-3 border border-dark border-1 rounded-0"
-          href="#"
+          href="/logout"
           role="button"
         >
           Logout
@@ -52,7 +52,10 @@
       <div class="pt-5">
         <h4 class="mt-3 text-center">Login Successful</h4>
         <h6 class="mt-4 text-center">
-          <strong>Welcome ! </strong> adityan.jain@infobeans.com
+          <strong>Welcome ! </strong>
+          <script>
+            document.write(localStorage.getItem("projectUserEmail"));
+          </script>
         </h6>
       </div>
     </div>

@@ -70,38 +70,28 @@
       <div
         class="border row border-2 border-dark p-2 chatbox border-top-0 border-bottom-0"
       >
-        <div class="chatMessages">
-          <p class="chatmessage">
-            [2013-21-27 01:06:23] Text User : Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Nisi, consequuntur?
-          </p>
-          <p class="chatmessage">
-            [2013-21-27 01:06:23] Text User : Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Nisi, consequuntur?
-          </p>
-          <p class="chatmessage">
-            [2013-21-27 01:06:23] Anne Hunter : Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Nisi, consequuntur?
-          </p>
-          <p class="chatmessage">
-            [2013-21-27 01:06:23] Jack Washk : Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Nisi, consequuntur?
-          </p>
+        <div class="chatMessages overflow-auto" id="chatMessages">
+          <div id="chatDataStatus" class="text-center mt-5">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="border row border-2 border-dark p-2 mt-0">
         <p class="col-2 mb-0 text-center">
-          <span class="fw-bold">Anne Hunter</span>
+          <span class="fw-bold" id="loggedInUserFullName"></span>
         </p>
         <p class="col-8 text-center mb-0">
-          <input type="text" class="w-100" />
+          <input type="text" class="w-100" id="chatMessage" />
         </p>
         <p class="col-2 text-start mb-0">
           <button
             type="button"
             class="btn btn-outline-dark p-1 fw-bold"
             id="sendMsg"
+            onclick="sendMessage()"
           >
             Send
           </button>
@@ -109,6 +99,7 @@
             type="button"
             class="btn btn-outline-dark p-1 fw-bold"
             id="hardRefresh"
+            onclick="refreshPage()"
           >
             Refresh
           </button>
@@ -121,4 +112,89 @@
     integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
     crossorigin="anonymous"
   ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    const name = localStorage.getItem("projectUserFullName");
+    const email = localStorage.getItem("projectUserEmail");
+    const token = localStorage.getItem("projectUserToken");
+
+    $(document).ready(function () {
+      $("#loggedInUserFullName").text(name);
+      getChat();
+      setInterval(function () {
+        refreshPage();
+      }, 10000);
+    });
+
+    let sendMessage = () => {
+      const message = document.getElementById("chatMessage").value;
+      const currentdate = new Date();
+      const date =
+        currentdate.getDate() +
+        "/" +
+        (currentdate.getMonth() + 1) +
+        "/" +
+        currentdate.getFullYear() +
+        " " +
+        currentdate.getHours() +
+        ":" +
+        currentdate.getMinutes() +
+        ":" +
+        currentdate.getSeconds();
+
+      if (message) {
+        console.log(message);
+        //send API request
+        $.ajax({
+          url: "/api/sendChat",
+          type: "POST",
+          data: {
+            email: email,
+            token: token,
+            message: message,
+            date: date,
+            name: name,
+          },
+          success: function (result) {
+            console.log(result);
+            $("#chatMessage").val("");
+            refreshPage();
+          },
+          error: function (data, status, error) {
+            console.log(data);
+          },
+        }); // ajax end
+      } else {
+        console.log("no message received");
+      }
+    };
+
+    let getChat = () => {
+      $.ajax({
+        url: "/api/getChat",
+        type: "GET",
+        success: function (result) {
+          let resultData = JSON.parse(result);
+          for (let index = 0; index < resultData.data.length; index++) {
+            const message = `<p class="chatmessage">[ ${resultData.data[index].date} ] ${resultData.data[index].userFullName} : ${resultData.data[index].message}   </p>`;
+            $("#chatMessages").append(message);
+          }
+          $("#chatDataStatus").addClass("d-none");
+          let d = $("#chatMessages");
+          d.scrollTop(d.prop("scrollHeight"));
+        },
+        error: function (data, status, error) {
+          console.log(data);
+        },
+      }); // ajax end
+    };
+
+    let refreshPage = () => {
+      location.reload();
+    };
+  </script>
 </html>

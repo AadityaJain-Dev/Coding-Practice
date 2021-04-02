@@ -68,7 +68,7 @@
           </div>
         </form>
 
-        <div class="text-center mt-5 fw-bold d-none"></div>
+        <div class="text-center mt-5 fw-bold d-none" id="registerStatus"></div>
       </div>
       <div class="col-3"></div>
     </div>
@@ -107,15 +107,33 @@
               fullName: fullName,
             },
             success: function (result) {
-              console.log(result);
+              $("#registerStatus")
+                .removeClass("d-none")
+                .html(
+                  '<div class="alert alert-success" role="alert"> ' +
+                    result +
+                    ' <a href="/login" class="alert-link">Click Here to log in</a></div>'
+                );
+              window.location.href = "/register-success";
             },
             error: function (data, status, error) {
-              console.log(data.responseText);
+              $("#registerStatus")
+                .removeClass("d-none")
+                .html(
+                  '<div class="alert alert-danger" role="alert"> ' +
+                    data.responseText.error +
+                    "</div>"
+                );
             },
           });
         }
       } else {
         // please fill all fields
+        $("#registerStatus")
+          .removeClass("d-none")
+          .html(
+            '<div class="alert alert-danger" role="alert"> Please Fill All the Fields</div>'
+          );
       }
     };
   </script>

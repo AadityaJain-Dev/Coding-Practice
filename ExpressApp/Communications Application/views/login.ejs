@@ -20,27 +20,19 @@
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
-        <form class="">
+        <form class="" onsubmit="formSubmit(event)">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Email address</label
-            >
+            <label for="loginEmail" class="form-label">Email address</label>
             <input
               type="email"
               class="form-control"
-              id="exampleInputEmail1"
+              id="loginEmail"
               aria-describedby="emailHelp"
             />
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="loginPassword" />
           </div>
           <div class="text-center">
             <button
@@ -51,6 +43,7 @@
             </button>
           </div>
         </form>
+        <div class="text-center mt-5 fw-bold d-none" id="loginStatus"></div>
       </div>
       <div class="col-3"></div>
     </div>
@@ -60,4 +53,54 @@
     integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
     crossorigin="anonymous"
   ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    let formSubmit = (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      if (email && password) {
+        //send API request
+        $.ajax({
+          url: "/api/userLogin",
+          type: "POST",
+          data: {
+            username: email,
+            password: password,
+          },
+          success: function (result) {
+            let dataResult = JSON.parse(result);
+
+            $("#loginStatus")
+              .removeClass("d-none")
+              .html(
+                '<div class="alert alert-success" role="alert"> ' +
+                  dataResult.status +
+                  "</div>"
+              );
+
+            localStorage.setItem("projectUserToken", dataResult.data._id);
+            localStorage.setItem("projectUserFullName", dataResult.data.name);
+            localStorage.setItem("projectUserEmail", dataResult.data.email);
+
+            window.location.href = "/dashboard";
+          },
+          error: function (data, status, error) {
+            $("#loginStatus")
+              .removeClass("d-none")
+              .html(
+                '<div class="alert alert-danger" role="alert"> ' +
+                  JSON.parse(data.responseText).error +
+                  "</div>"
+              );
+          },
+        });
+      }
+    };
+  </script>
 </html>

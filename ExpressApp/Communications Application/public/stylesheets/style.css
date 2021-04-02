@@ -41,3 +41,7 @@
 .chatmessage {
   margin-bottom: 0;
 }
+
+.chatMessages {
+  max-height: 350px;
+}
