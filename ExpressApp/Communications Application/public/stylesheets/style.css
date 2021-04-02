@@ -1,0 +1,43 @@
+/* Navbar */
+.navbar-nav,
+.mr-auto {
+  flex: 1;
+  margin: auto !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Custom colors*/
+.my-btn-secondary {
+  background-color: #cccccc;
+  border-color: #cccccc;
+}
+
+.my-border-secondary {
+  border-color: #cccccc;
+}
+
+.my-bg-secondary {
+  background-color: #cccccc;
+}
+
+.custom-table {
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.custom-table td {
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.chatbox {
+  min-height: 300px;
+}
+
+.chatmessage {
+  margin-bottom: 0;
+}
